@@ -65,3 +65,42 @@ window.addEventListener('DOMContentLoaded',()=>{
     createParticles('galleryParticles','rgba(255,0,255,0.4)',70);
     createParticles('proposalParticles','rgba(255,0,255,0.4)',70);
 });
+// Navigation function
+function goToPage(url){
+    document.querySelector('.fade-page').style.opacity = 0;
+    setTimeout(() => {
+        window.location.href = url;
+    }, 500);
+}
+
+// Minimal particles for testing
+window.addEventListener('DOMContentLoaded',()=>{
+    const canvas = document.getElementById('indexParticles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    for(let i=0;i<50;i++){
+        particles.push({
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height,
+            size: Math.random()*4+2,
+            speed: Math.random()*1.5+0.5
+        });
+    }
+
+    function animate(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(0,255,255,0.4)';
+            ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+            ctx.fill();
+            p.y -= p.speed;
+            if(p.y<0)p.y=canvas.height;
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+});
